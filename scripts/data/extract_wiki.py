@@ -36,7 +36,7 @@ def wikiToCsv(jsonDir, csvDir, nProc):
         procs = []
         for j in range(nProc):
             index = i + j
-            if index > len(allJsons):
+            if index >= len(allJsons):
                 break
 
             logging.info('Processing file {0} of {1}'.format(
