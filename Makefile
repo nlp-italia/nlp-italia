@@ -10,7 +10,7 @@ wikiextractor:
 		cd .. ; \
 	fi
 
-wikidata:
+wikidata: wikiextractor
 	@if [ ! -d "data" ]; then \
 		mkdir data; \
 	fi; \
