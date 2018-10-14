@@ -26,8 +26,8 @@ def wikiToCsv(jsonDir, csvDir, nProc):
             for line in fp:
                 df = df.append(json.loads(line), ignore_index=True)
         filename = jsonPath.split("/")[-1].strip(".json")
-        csvPath = os.path.join(csvDir, "{0}.csv".format(filename))
-        df.to_csv(csvPath)
+        csvPath = os.path.join(csvDir, "{0}.tsv".format(filename))
+        df.to_csv(csvPath, sep="\t")
 
     allJsons = glob.glob(os.path.join(jsonDir, "*"))
     nProc = min(len(allJsons), nProc)
