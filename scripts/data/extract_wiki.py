@@ -1,6 +1,7 @@
 import argparse
 import glob
 import json
+import logging
 import multiprocessing
 import os
 import subprocess
@@ -29,7 +30,7 @@ def wikiToCsv(jsonDir, csvDir, nProc):
         csvPath = os.path.join(csvDir, "{0}.tsv".format(filename))
         df.to_csv(csvPath, sep="\t")
 
-    allJsons = glob.glob(os.path.join(jsonDir, "*"))
+    allJsons = glob.glob(os.path.join(jsonDir, "**/*"))
     nProc = min(len(allJsons), nProc)
     for i in range(0, len(allJsons), nProc):
         procs = []
@@ -38,6 +39,8 @@ def wikiToCsv(jsonDir, csvDir, nProc):
             if index > len(allJsons):
                 break
 
+            logging.info('Processing file {0} of {1}'.format(
+                index, len(allJsons)))
             jsonPath = allJsons[index]
             process = multiprocessing.Process(
                 name=jsonPath, target=aux, args=(jsonPath, csvDir))
@@ -66,14 +69,15 @@ def main():
         help="Number of processes to use")
     args = parser.parse_args()
 
-    nProc = args.num_process if args.num_process else \
+    nProc = args.num_process if args.num_process > 0 else \
         multiprocessing.cpu_count()
 
     extractWiki(args.wikiextractor, args.json_dir, nProc, args.dump_file)
 
     if args.csv_dir:
-        wikiToCsv(args)
+        wikiToCsv(args.json_dir, args.csv_dir, nProc)
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     main()
