@@ -1,5 +1,8 @@
 .gitmodules
-wikiextractor
+
+# Data extraction folders
+wikiextractor/
+data/
 
 
 # Byte-compiled / optimized / DLL files
