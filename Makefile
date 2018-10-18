@@ -11,9 +11,6 @@ wikiextractor:
 	fi
 
 wikidata: wikiextractor
-	@if [ ! -d "data" ]; then \
-		mkdir data; \
-	fi; \
 	sudo chmod u+x scripts/data/download_and_extract_wiki.sh; \
 	./scripts/data/download_and_extract_wiki.sh \
 		$(WIKIDUMP) wikiextractor/WikiExtractor.py;

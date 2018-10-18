@@ -2,25 +2,16 @@
 
 WIKIDUMP=${1}
 WIKIEXTRACTOR=${2}
+DATA_FOLDER='data'
 
-wget ${WIKIDUMP} --directory-prefix=data/
+wget ${WIKIDUMP} --directory-prefix=${DATA_FOLDER}/
 
-if [ ! -d "data/wiki" ]; then
-  mkdir data/wiki
-fi
-
-if [ ! -d "data/wiki/json" ]; then
-  mkdir data/wiki/json
-fi
-
-if [ ! -d "data/wiki/csv" ]; then
-  mkdir data/wiki/csv
-fi
+mkdir -p ${DATA_FOLDER}/wiki ${DATA_FOLDER}/wiki/json ${DATA_FOLDER}/wiki/csv
 
 python3 -m scripts.data.extract_wiki \
   --wikiextractor ${WIKIEXTRACTOR} \
-  --dump_file data/itwiki-latest-pages-articles.xml.bz2 \
-  --json_dir data/wiki/json/ \
-  --csv_dir data/wiki/csv/
+  --dump_file ${DATA_FOLDER}/itwiki-latest-pages-articles.xml.bz2 \
+  --json_dir ${DATA_FOLDER}/wiki/json/ \
+  --csv_dir ${DATA_FOLDER}/wiki/csv/
 
-rm data/itwiki-latest-pages-articles.xml.bz2
+rm ${DATA_FOLDER}/itwiki-latest-pages-articles.xml.bz2
