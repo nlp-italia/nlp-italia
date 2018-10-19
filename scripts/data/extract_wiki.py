@@ -16,10 +16,12 @@ def extractWiki(wikiextractor, jsonDir, nProc, dumpFile):
             wikiextractor, jsonDir, nProc, dumpFile))
 
     process = list(map(lambda x: x.strip(), process.split(" ")))
+    logging.info('Extracting wiki to JSON...')
     subprocess.call(process)
 
 
 def wikiToCsv(jsonDir, csvDir, nProc):
+    logging.info('Converting Wiki to CSV')
     def aux(jsonPath, csvDir):
         """Auxiliari function, it transforms one single JSON into one CSV"""
         df = pd.DataFrame()
