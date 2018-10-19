@@ -1,17 +1,18 @@
 #!/bin/bash
 
-WIKIDUMP=${1}
+WIKIDUMP_URL=${1}
 WIKIEXTRACTOR=${2}
-DATA_FOLDER='data'
+DATA_FOLDER="data"
+WIKIDUMP_FILE="${DATA_FOLDER}/wikidump.bz2"
 
-wget ${WIKIDUMP} --directory-prefix=${DATA_FOLDER}/
+mkdir -p ${DATA_FOLDER}/wiki/json ${DATA_FOLDER}/wiki/csv
 
-mkdir -p ${DATA_FOLDER}/wiki ${DATA_FOLDER}/wiki/json ${DATA_FOLDER}/wiki/csv
+wget ${WIKIDUMP_URL} -O ${WIKIDUMP_FILE} --continue
 
 python3 -m scripts.data.extract_wiki \
   --wikiextractor ${WIKIEXTRACTOR} \
-  --dump_file ${DATA_FOLDER}/itwiki-latest-pages-articles.xml.bz2 \
+  --dump_file ${WIKIDUMP_FILE} \
   --json_dir ${DATA_FOLDER}/wiki/json/ \
   --csv_dir ${DATA_FOLDER}/wiki/csv/
 
-rm ${DATA_FOLDER}/itwiki-latest-pages-articles.xml.bz2
+rm ${WIKIDUMP_FILE}
