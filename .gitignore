@@ -2,7 +2,7 @@
 
 # Data extraction folders
 wikiextractor/
-data/
+/data/
 
 
 # Byte-compiled / optimized / DLL files
